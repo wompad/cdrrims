@@ -11,6 +11,8 @@
 				$this->load->view('pages/'.$page);
 			}elseif($page == 'weatherforecast'){
 				$this->load->view('pages/'.$page);
+			}elseif($page == 'disasterkiosk'){
+				$this->load->view('pages/'.$page);
 			}else{
 				$this->load->view('template/header');
 				$this->load->view('pages/'.$page);
