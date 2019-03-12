@@ -94,13 +94,14 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="x-content">
-                  <div class="dashboard-widget-content" style="text-align:justify">
+                  <a class="twitter-timeline" href="https://twitter.com/dost_pagasa?ref_src=twsrc%5Etfw">Tweets by dost_pagasa</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                  <!-- <div class="dashboard-widget-content" style="text-align:justify">
                     <ul class="list-unstyled timeline widget" id="weathertextforecasts">
                     </ul>
                   </div>
                   <div class="dashboard-widget-content" style="text-align:justify">
                     <h5>Source: <a href="http://www1.pagasa.dost.gov.ph/" target="_blank">http://www1.pagasa.dost.gov.ph/</a></h5>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>

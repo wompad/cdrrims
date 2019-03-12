@@ -338,26 +338,33 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="dashboard_graph">
+                                <div class="col-md-3 col-sm-12 col-xs-12">
                                     <div class="x_panel" style="border: 3px solid #E74C3C; height:653px; overflow:auto">
                                         <div class="x-title green">
                                             <h4><strong>Public Weather Forecast <span id="issuedat"></span></strong></h4>
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="x-content">
-                                            <div class="dashboard-widget-content" style="text-align:justify">
+                                          <a class="twitter-timeline" href="https://twitter.com/dost_pagasa?ref_src=twsrc%5Etfw">Tweets by dost_pagasa</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                            <!-- <div class="dashboard-widget-content" style="text-align:justify">
                                                 <ul class="list-unstyled timeline widget" id="weathertextforecasts">
                                                 </ul>
                                             </div>
                                             <div class="dashboard-widget-content" style="text-align:justify">
                                                 <h5>Source: <a href="http://www1.pagasa.dost.gov.ph/" target="_blank">http://www1.pagasa.dost.gov.ph/</a></h5>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5 col-sm-12 col-xs-12">
-                                    <div class="x_panel" style="height: auto; border: 3px solid #EC971F">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="x_panel" style="height:653px; border: 3px solid #EC971F">
                                         <div class="x-title green">
                                             <h4><strong>Weather Radar Image </strong></h4>
                                             <div class="clearfix"></div>
@@ -375,7 +382,7 @@
 
                                 <div class="col-md-3 col-sm-12 col-xs-12">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="x_panel" style="height: auto; border: 3px solid #199919; padding:0px">
+                                        <div class="x_panel" style="height:653px; border: 3px solid #199919;">
                                             <div>
                                                 <div>
                                                     <div class="x_panel" style="padding:0px">
@@ -403,8 +410,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="dashboard_graph">
+                                
+                                <div class="col-md-3 col-sm-12 col-xs-12">
+                                    <div class="x_panel" style="border: 3px solid #E74C3C; height:1123px; overflow:auto">
+                                        <div class="x-title green">
+                                            <h4><strong>PHIVOLCS Advisories <span id="issuedat"></span></strong></h4>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x-content">
+                                          <a class="twitter-timeline" href="https://twitter.com/phivolcs_dost?ref_src=twsrc%5Etfw">Tweets by phivolcs_dost</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                            <!-- <div class="dashboard-widget-content" style="text-align:justify">
+                                                <ul class="list-unstyled timeline widget" id="weathertextforecasts">
+                                                </ul>
+                                            </div>
+                                            <div class="dashboard-widget-content" style="text-align:justify">
+                                                <h5>Source: <a href="http://www1.pagasa.dost.gov.ph/" target="_blank">http://www1.pagasa.dost.gov.ph/</a></h5>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-9 col-sm-12 col-xs-12">
                                     <div class="x_panel" style="border: 3px solid #E74C3C; overflow:auto">
                                         <div class="x-title red">
                                             <h4><strong>Hazard Visualization</strong></h4>
@@ -421,7 +454,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="clearfix"></div>
                             </div>
                         </div>
