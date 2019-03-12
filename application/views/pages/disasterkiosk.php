@@ -259,7 +259,7 @@
 
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #fff">
     <div class="container body">
         <div class="main_container">
             <div class="row">
@@ -633,7 +633,7 @@ if(tbl_masterquery.length){
 </div>
 </div>
 </div>
-<footer>
+<footer style="background-color: #fff">
     <div class="pull-right">
         DSWD DRMD - All Rights Reserved
         <?= date("Y"); ?>
