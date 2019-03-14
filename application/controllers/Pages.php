@@ -11,7 +11,7 @@
 				$this->load->view('pages/'.$page);
 			}elseif($page == 'weatherforecast'){
 				$this->load->view('pages/'.$page);
-			}elseif($page == 'disasterkiosk'){
+			}elseif($page == 'disasterkiosk' || $page == 'wordtopdf'){
 				$this->load->view('pages/'.$page);
 			}else{
 				$this->load->view('template/header');

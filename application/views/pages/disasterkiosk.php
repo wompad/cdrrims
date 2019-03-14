@@ -338,12 +338,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="dashboard_graph">
                                 <div class="col-md-3 col-sm-12 col-xs-12">
                                     <div class="x_panel" style="border: 3px solid #E74C3C; height:653px; overflow:auto">
@@ -394,7 +394,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div>
                                                 <div>
                                                     <div class="x_panel" style="padding:0px">
@@ -406,16 +405,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
+                          </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="dashboard_graph">
                                 
                                 <div class="col-md-3 col-sm-12 col-xs-12">
@@ -456,6 +455,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
+                          </div>
                         </div>
                     </div>
                 </div>
