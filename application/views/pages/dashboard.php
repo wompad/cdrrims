@@ -5,7 +5,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12 tile_stats_count">
         <center>
           <h4>
-            <strong>Total for Disaster Events 2018</strong>
+            <strong>Total for Disaster Events <?= date("Y") ?> </strong>
           </h4>
         </center>
       </div>
