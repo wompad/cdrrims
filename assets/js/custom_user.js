@@ -9412,8 +9412,12 @@ function get_reliefassistance_report(yearss){
 					name 	: "Cash-for-Work"
 				},
 				{
-					code 	: "esa",
-					name 	: "Emergency Shelter Assistance"
+					code 	: "esatot",
+					name 	: "Emergency Shelter Assistance - Totally Damaged"
+				},
+				{
+					code 	: "esapart",
+					name 	: "Emergency Shelter Assistance - Partially Damaged"
 				}
 			];	
 
@@ -9446,6 +9450,8 @@ function get_reliefassistance_report(yearss){
 					}
 				}
 
+				nserve += tnserve; 
+
 
 				$('#tbl_assistanceperdisaster tbody').append(
 
@@ -9474,15 +9480,15 @@ function get_reliefassistance_report(yearss){
 									var string = "Augmentation Assistance";
 								}else if(a.asst[k].augment_list_code == 'aug_ffw'){
 									var string = "Food-for-Work";
-								}else if(a.asst[k].augment_list_code == 'cfw'){
+								}else if(a.asst[k].augment_list_code == 'cfwtot' || a.asst[k].augment_list_code == 'cfwpart'){
 									var string = "Cash-for-Work";
-								}else if(a.asst[k].augment_list_code == 'esa'){
+								}else if(a.asst[k].augment_list_code == 'esatot' || a.asst[k].augment_list_code == 'esapart'){
 									var string = "Emergency Shelter Assistance";
 								}
 
 								var amt = Number(a.asst[k].quantity) * Number(a.asst[k].cost);
 
-								nserve = Number(a.asst[k].number_served);
+								//nserve = Number(a.asst[k].number_served);
 								namount += amt;
 
 								var strpacks = a.asst[k].assistance_name.toLowerCase();
@@ -9522,7 +9528,7 @@ function get_reliefassistance_report(yearss){
 									var served =  "";
 								}else{
 									var served =  a.asst[k].number_served;
-									nserve += Number(a.asst[k].number_served);
+									//nserve += Number(a.asst[k].number_served);
 
 								}
 
@@ -9532,9 +9538,9 @@ function get_reliefassistance_report(yearss){
 										var string = "Augmentation Assistance";
 									}else if(a.asst[k].augment_list_code == 'aug_ffw'){
 										var string = "Food-for-Work";
-									}else if(a.asst[k].augment_list_code == 'cfw'){
+									}else if(a.asst[k].augment_list_code == 'cfwtot' || a.asst[k].augment_list_code == 'cfwpart'){
 										var string = "Cash-for-Work";
-									}else if(a.asst[k].augment_list_code == 'esa'){
+									}else if(a.asst[k].augment_list_code == 'esatot' || a.asst[k].augment_list_code == 'esapart'){
 										var string = "Emergency Shelter Assistance";
 									}
 
@@ -9577,7 +9583,7 @@ function get_reliefassistance_report(yearss){
 									var served =  "";
 								}else{
 									var served =  a.asst[k].number_served;
-									nserve += Number(a.asst[k].number_served);
+									//nserve += Number(a.asst[k].number_served);
 								}
 
 								if(a.perd[i].disaster_event == a.asst[k].disaster_event){
@@ -9586,9 +9592,9 @@ function get_reliefassistance_report(yearss){
 										var string = "Augmentation Assistance";
 									}else if(a.asst[k].augment_list_code == 'aug_ffw'){
 										var string = "Food-for-Work";
-									}else if(a.asst[k].augment_list_code == 'cfw'){
+									}else if(a.asst[k].augment_list_code == 'cfwtot' || a.asst[k].augment_list_code == 'cfwpart'){
 										var string = "Cash-for-Work";
-									}else if(a.asst[k].augment_list_code == 'esa'){
+									}else if(a.asst[k].augment_list_code == 'esatot' || a.asst[k].augment_list_code == 'esapart'){
 										var string = "Emergency Shelter Assistance";
 									}
 
@@ -9678,6 +9684,8 @@ function get_reliefassistance_report(yearss){
 
 				$('#tbl_assistanceperdisastercons tbody').empty();
 
+				var allserve = 0;
+				var allamount = 0;
 
 				for(var i in a.perd){
 
@@ -9706,8 +9714,13 @@ function get_reliefassistance_report(yearss){
 							tnamount += Number(a.asst[kk].quantity) * Number(a.asst[kk].cost);
 
 						}
+
+						
+
 					}
 
+					allserve += tnserve;
+					allamount += tnamount;
 
 					$('#tbl_assistanceperdisastercons tbody').append(
 
@@ -9847,6 +9860,17 @@ function get_reliefassistance_report(yearss){
 
 
 				}
+
+				$('#tbl_assistanceperdisastercons tbody').append(
+
+					"<tr style='font-weight: bold'>"+
+						"<td style='border: 1px solid #000; background-color: #D8D8D8; color: #000'><b>TOTAL</b></td>"+
+						"<td style='text-align:center; border: 1px solid #000; background-color: #D8D8D8; color: #000'></td>"+
+						"<td style='text-align:right; border: 1px solid #000; background-color: #D8D8D8; color: #000'>"+addComma(allserve)+"</td>"+
+						"<td style='text-align:right; border: 1px solid #000; background-color: #D8D8D8; color: #000'>"+addCommaMoney(allamount)+"</td>"+
+					"</tr>"
+
+				);
 
 
 				$('#asstloader').hide();
