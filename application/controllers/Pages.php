@@ -874,6 +874,12 @@
 
 		}
 
+		public function get_congressional_sem(){
+
+			echo json_encode($data['result'][] = $this->disaster_model->get_congressional_sem(),JSON_NUMERIC_CHECK);
+
+		}
+
 		public function get_disaster_events(){
 
 			echo json_encode($data['result'][] = $this->disaster_model->get_disaster_events(),JSON_NUMERIC_CHECK);
@@ -1055,6 +1061,12 @@
 			$namelist_id = $_POST['namelist_id'];
 
 			echo json_encode($data['result'][] = $this->disaster_model->get_tev_t($namelist_id),JSON_NUMERIC_CHECK);
+
+		}
+
+		public function get_all_disasters(){
+			
+			echo json_encode($data['result'][] = $this->disaster_model->get_all_disasters(),JSON_NUMERIC_CHECK);
 
 		}
 

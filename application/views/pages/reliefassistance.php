@@ -42,7 +42,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel-group">
                               <div class="panel panel-default" style="border-radius:0px">
-                                    <div class="panel-heading" style="background-color: gray; color:#fff; border-radius:0px"><i class="fa fa-th"></i> Assistance Report 2018 (Per Disaster Event)</div>
+                                    <div class="panel-heading" style="background-color: gray; color:#fff; border-radius:0px"><i class="fa fa-th"></i> Assistance Report (Per Disaster Event)</div>
                                     <div class="panel-body">
                                           <div class="row">
                                                 <ul class="nav nav-tabs">

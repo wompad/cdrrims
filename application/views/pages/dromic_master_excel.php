@@ -869,7 +869,8 @@
 			                  				<th> Province/City/Municipality </th>
 			                  				<th> Food and Non-Food Assistance </th>
 			                  				<th style="text-align:right"> Quantity</th>
-			                  				<th> Date Augmented </th>
+			                  				<th style="text-align:right"> Cost</th>
+			                  				<th style="text-align:right"> Date Augmented </th>
 			                  				<th style="text-align:right"> Amount </th>
 			                  				<th style="text-align:center"></th>
 			                  			</tr>

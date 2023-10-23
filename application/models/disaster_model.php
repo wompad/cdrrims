@@ -314,7 +314,8 @@ class disaster_model extends CI_Model{
 										WHERE
 											t1. ID = '$id' -- disaster_title_id
 										ORDER BY
-											t3.municipality_id ASC, t3.evacuation_name ASC, t3.ec_cum DESC, t3.place_of_origin ASC
+											--t3.municipality_id ASC, t3.evacuation_name ASC, t3.ec_cum DESC, t3.place_of_origin ASC
+											t3.municipality_id ASC, t3.place_of_origin ASC, t3.evacuation_name ASC, t3.ec_cum DESC
 									");
 
 			$query1 = $this->db->query("SELECT DISTINCT
@@ -351,7 +352,7 @@ class disaster_model extends CI_Model{
 																	t1.municipality_id,
 																	t1.provinceid
 																FROM
-																	tbl_evac_outside_stats_copy t1
+																	tbl_evac_outside_stats t1
 																WHERE
 																	t1.disaster_title_id = '$id'
 															)
@@ -393,7 +394,7 @@ class disaster_model extends CI_Model{
 										FROM
 											public.tbl_disaster_title t1
 										LEFT JOIN public.tbl_dromic t2 ON t1.dromic_id = t2. ID
-										LEFT JOIN public.tbl_evac_outside_stats_copy t3 ON t1. ID = t3.disaster_title_id
+										LEFT JOIN public.tbl_evac_outside_stats t3 ON t1. ID = t3.disaster_title_id
 										LEFT JOIN public.tbl_municipality t4 ON t3.municipality_id = t4. ID
 										LEFT JOIN public.tbl_provinces t5 ON t3.provinceid = t5. ID
 										LEFT JOIN public.tbl_barangay t6 ON t3.brgy_host :: CHARACTER VARYING = t6. ID :: CHARACTER VARYING
@@ -491,7 +492,7 @@ class disaster_model extends CI_Model{
 																				t1.person_cum :: INTEGER person_cum_o,
 																				t1.person_now :: INTEGER person_now_o
 																			FROM
-																				PUBLIC .tbl_evac_outside_stats_copy t1
+																				PUBLIC .tbl_evac_outside_stats t1
 																			LEFT JOIN PUBLIC .tbl_disaster_title t2 ON t1.disaster_title_id = t2. ID
 																			WHERE
 																				t1.disaster_title_id = $id
@@ -623,7 +624,7 @@ class disaster_model extends CI_Model{
 																																	t4.municipality_id,
 																																	t4.brgy_host brgy
 																																FROM
-																																	PUBLIC .tbl_evac_outside_stats_copy t4
+																																	PUBLIC .tbl_evac_outside_stats t4
 																																LEFT JOIN PUBLIC .tbl_disaster_title t5 ON t4.disaster_title_id = t5. ID
 																																WHERE
 																																	t4.disaster_title_id = $id -- disaster_title_id
@@ -643,7 +644,7 @@ class disaster_model extends CI_Model{
 																																	t4.municipality_id,
 																																	t4.brgy_origin brgy
 																																FROM
-																																	PUBLIC .tbl_evac_outside_stats_copy t4
+																																	PUBLIC .tbl_evac_outside_stats t4
 																																LEFT JOIN PUBLIC .tbl_disaster_title t5 ON t4.disaster_title_id = t5. ID
 																																WHERE
 																																	t4.disaster_title_id = $id -- disaster_title_id
@@ -734,7 +735,7 @@ class disaster_model extends CI_Model{
 											FROM
 												public.tbl_evacuation_stats t1
 											LEFT JOIN public.tbl_disaster_title t3 ON t1.disaster_title_id = t3. ID
-											WHERE t1.ec_cum = '1'
+											WHERE t1.ec_cum <> ''
 											AND t1.disaster_title_id = $id -- disaster_title_id
 											ORDER BY t1.municipality_id
 									");
@@ -893,7 +894,7 @@ class disaster_model extends CI_Model{
 																				t3.municipality_name,
 																				t2.disaster_title
 																			FROM
-																				public.tbl_evac_outside_stats_copy t1
+																				public.tbl_evac_outside_stats t1
 																			LEFT JOIN public.tbl_disaster_title t2 ON t1.disaster_title_id = t2. ID
 																			LEFT JOIN public.tbl_municipality t3 ON t1.municipality_id = t3. ID
 																			WHERE
@@ -983,7 +984,7 @@ class disaster_model extends CI_Model{
 																							t3.municipality_name,
 																							t2.disaster_title
 																						FROM
-																							public.tbl_evac_outside_stats_copy t1
+																							public.tbl_evac_outside_stats t1
 																						LEFT JOIN public.tbl_disaster_title t2 ON t1.disaster_title_id = t2. ID
 																						LEFT JOIN public.tbl_municipality t3 ON t1.municipality_id = t3. ID
 																						WHERE
@@ -1416,7 +1417,7 @@ class disaster_model extends CI_Model{
 				}
 
 				$q2 = $this->db->where('disaster_title_id', $oid);
-				$q2 = $this->db->get('tbl_evac_outside_stats_copy');
+				$q2 = $this->db->get('tbl_evac_outside_stats');
 
 				$data['rs'] = $q2->result_array();
 
@@ -1434,7 +1435,7 @@ class disaster_model extends CI_Model{
 						'municipality_origin' 	=> $data['rs'][$i]['municipality_origin'],
 						'province_origin' 		=> $data['rs'][$i]['province_origin'],
 					);
-					$q2_a= $this->db->insert('tbl_evac_outside_stats_copy',$datai);
+					$q2_a= $this->db->insert('tbl_evac_outside_stats',$datai);
 				}
 
 				$q3 = $this->db->where('disaster_title_id', $oid);
@@ -1680,7 +1681,7 @@ class disaster_model extends CI_Model{
 
 		public function savenewfamOEC($data){
 
-			$q= $this->db->insert('tbl_evac_outside_stats_copy',$data);
+			$q= $this->db->insert('tbl_evac_outside_stats',$data);
 
 			if ($this->db->trans_status() === FALSE)
 			{
@@ -1698,7 +1699,7 @@ class disaster_model extends CI_Model{
 		public function getFamOEC($id){
 
 			$q1 = $this->db->where('id', $id);
-			$q1 = $this->db->get('tbl_evac_outside_stats_copy');
+			$q1 = $this->db->get('tbl_evac_outside_stats');
 
 			$data['rs'] = $q1->result_array();
 
@@ -1730,7 +1731,7 @@ class disaster_model extends CI_Model{
 		public function updateFamOEC($data,$id){
 
 			$query = $this->db->where('id', $id);
-			$query = $this->db->update('tbl_evac_outside_stats_copy', $data);
+			$query = $this->db->update('tbl_evac_outside_stats', $data);
 
 			if($query){
 				return 1;
@@ -2854,7 +2855,7 @@ class disaster_model extends CI_Model{
 																SELECT
 																	SUM (t1.family_cum :: INTEGER) AS aff_family
 																FROM
-																	tbl_evac_outside_stats_copy t1
+																	tbl_evac_outside_stats t1
 																WHERE
 																	t1.disaster_title_id = $id
 															)
@@ -2881,7 +2882,7 @@ class disaster_model extends CI_Model{
 															SELECT
 																SUM (t1.person_cum :: INTEGER) AS aff_person
 															FROM
-																tbl_evac_outside_stats_copy t1
+																tbl_evac_outside_stats t1
 															WHERE
 																t1.disaster_title_id = $id
 														)
@@ -2903,7 +2904,7 @@ class disaster_model extends CI_Model{
 
 					$data['num_dswd_asst'] = $query4->result_array();
 					for($j = 0 ; $j < count($data['num_dswd_asst']) ; $j++){
-						$dswd_asst = $dswd_asst + $data['num_dswd_asst'][$j]['dswd_asst'];
+						$dswd_asst = (int) $dswd_asst + (int) $data['num_dswd_asst'][$j]['dswd_asst'];
 					}
 
 					$query6 = $this->db->query("SELECT
@@ -2922,7 +2923,7 @@ class disaster_model extends CI_Model{
 					$query7 = $this->db->query("SELECT
 													SUM (t1.family_cum :: INTEGER) AS aff_familyoutec
 												FROM
-													tbl_evac_outside_stats_copy t1
+													tbl_evac_outside_stats t1
 												WHERE
 													t1.disaster_title_id = $id
 					");
@@ -2952,7 +2953,7 @@ class disaster_model extends CI_Model{
 																	SUM (t1.family_cum :: INTEGER) AS aff_family,
 																	t2.disaster_title
 																FROM
-																	tbl_evac_outside_stats_copy t1
+																	tbl_evac_outside_stats t1
 																LEFT JOIN tbl_disaster_title t2 ON t1.disaster_title_id = t2. ID
 																WHERE t1.disaster_title_id = $id
 																GROUP BY
@@ -3010,7 +3011,7 @@ class disaster_model extends CI_Model{
 																				t3.municipality_name,
 																				t2.disaster_title
 																			FROM
-																				tbl_evac_outside_stats_copy t1
+																				tbl_evac_outside_stats t1
 																			LEFT JOIN tbl_disaster_title t2 ON t1.disaster_title_id = t2. ID
 																			LEFT JOIN tbl_municipality t3 ON t1.municipality_id = t3.id
 																			WHERE
@@ -3073,7 +3074,7 @@ class disaster_model extends CI_Model{
 							if($ra[$g]['dswd_asst'] != ""){
 								$title = $ra[$g]['disaster_title'];
 							}
-							$assts = $assts + $ra[$g]['dswd_asst'];
+							$assts = (int) $assts + (int) $ra[$g]['dswd_asst'];
 						}
 
 						if($assts == 0){
@@ -3169,7 +3170,7 @@ class disaster_model extends CI_Model{
 																		SELECT DISTINCT
 																			ON (t2.municipality_id) t2.municipality_id
 																		FROM
-																			tbl_evac_outside_stats_copy t2
+																			tbl_evac_outside_stats t2
 																		WHERE
 																			t2.disaster_title_id = $id
 																	)
@@ -3902,7 +3903,7 @@ class disaster_model extends CI_Model{
 		public function delFamOEC($id){
 
 			$query = $this->db->where('id',$id);
-			$query = $this->db->delete('tbl_evac_outside_stats_copy');
+			$query = $this->db->delete('tbl_evac_outside_stats');
 
 			if($query){
 				return 1;
@@ -3967,11 +3968,11 @@ class disaster_model extends CI_Model{
 
 				for($r = 0 ; $r < count($arr) ; $r++){
 
-					$tot 		= $tot + $arr[$r]['totally_damaged'];
-					$part 		= $part + $arr[$r]['partially_damaged'];
-					$dead 		= $dead + $arr[$r]['dead'];
-					$injured 	= $injured + $arr[$r]['injured'];
-					$missing 	= $missing + $arr[$r]['missing'];
+					$tot 		= (int)$tot + (int)$arr[$r]['totally_damaged'];
+					$part 		= (int)$part + (int)$arr[$r]['partially_damaged'];
+					$dead 		= (int)$dead + (int)$arr[$r]['dead'];
+					$injured 	= (int)$injured + (int)$arr[$r]['injured'];
+					$missing 	= (int)$missing + (int)$arr[$r]['missing'];
 
 					if($r == 0){
 						$brgy_id = $arr[$r]['brgy_id'];
@@ -4122,11 +4123,11 @@ class disaster_model extends CI_Model{
 
 				for($i = 0 ; $i < count($arr) ; $i++){
 
-					$totally_damaged 	= $totally_damaged + $arr[$i]['totally_damaged'];
-					$partially_damaged 	= $partially_damaged + $arr[$i]['partially_damaged'];
-					$dead 				= $dead + $arr[$i]['dead'];
-					$injured 			= $injured + $arr[$i]['injured'];
-					$missing 			= $missing + $arr[$i]['missing'];
+					$totally_damaged 	= (int)$totally_damaged + (int)$arr[$i]['totally_damaged'];
+					$partially_damaged 	= (int)$partially_damaged + (int)$arr[$i]['partially_damaged'];
+					$dead 				= (int)$dead + (int)$arr[$i]['dead'];
+					$injured 			= (int)$injured + (int)$arr[$i]['injured'];
+					$missing 			= (int)$missing + (int)$arr[$i]['missing'];
 
 					if($i == 0){
 						$brgy_id = $arr[$i]['brgy_id'];
@@ -4724,6 +4725,205 @@ class disaster_model extends CI_Model{
 																'year',
 																t1.date_augmented :: DATE
 															) = $year :: NUMERIC
+															AND t4.assistance_type_gen = 'aug'
+															ORDER BY
+																t2.municipality_id ASC,
+																t1.date_augmented ASC
+														) t1
+													GROUP BY
+														t1.municipality_name,
+														t1.municipality_id,
+														t1.date_augmented,
+														t1.number_served,
+														t1.amount
+												) t1
+											GROUP BY
+												t1.municipality_id
+			");
+
+			$data['aug'] = $queryaug->result_array();
+
+			return $data;
+
+		}
+
+		public function get_congressional_sem(){
+
+			$querycity = $this->db->query("SELECT
+											t2.province_name,
+											t1.district,
+											t1.municipality_name,
+											t1. ID AS municipality_id
+										FROM
+											tbl_municipality t1
+										LEFT JOIN tbl_provinces t2 ON t1.provinceid = t2. ID
+										WHERE
+											t1.district IS NOT NULL
+										ORDER BY
+											t1.district ASC,
+											t1. ID ASC
+			");
+
+			$data['city'] = $querycity->result_array();
+
+			$querycfw2 = $this->db->query("SELECT
+												t1.municipality_id,
+												SUM (t1.number_served :: NUMERIC) serve,
+												SUM (t1.amount :: NUMERIC) amount
+											FROM
+												(
+													SELECT
+														t1.municipality_id,
+														t1.municipality_name,
+														t1.amount,
+														t1.number_served
+													FROM
+														(
+															SELECT
+																t1.*, t2.number_served,
+																t2.municipality_id,
+																t3.municipality_name,
+																t4.assistance_type_gen,
+																t2.amount
+															FROM
+																tbl_augmentation_list_spec t1
+															LEFT JOIN tbl_augmentation_list t2 ON t1.augment_list_id = t2. ID
+															LEFT JOIN tbl_municipality t3 ON t2.municipality_id = t3. ID
+															LEFT JOIN tbl_assistance_type t4 ON t1.augment_list_code = t4.assistance_type_sub_gen
+															WHERE
+																t1.date_augmented between '2021-01-01' AND '2021-06-30'
+															AND t4.assistance_type_gen = 'cfw'
+															ORDER BY
+																t2.municipality_id ASC,
+																t1.date_augmented ASC
+														) t1
+													GROUP BY
+														t1.municipality_name,
+														t1.municipality_id,
+														t1.date_augmented,
+														t1.number_served,
+														t1.amount
+												) t1
+											GROUP BY
+												t1.municipality_id
+			");
+
+			$data['cfw2'] = $querycfw2->result_array();
+
+			$queryesa = $this->db->query("SELECT
+												t1.municipality_id,
+												SUM (t1.number_served :: NUMERIC) serve,
+												SUM (t1.amount :: NUMERIC) amount
+											FROM
+												(
+													SELECT
+														t1.municipality_id,
+														t1.municipality_name,
+														t1.amount,
+														t1.number_served
+													FROM
+														(
+															SELECT
+																t1.*, t2.number_served,
+																t2.municipality_id,
+																t3.municipality_name,
+																t4.assistance_type_gen,
+																t2.amount
+															FROM
+																tbl_augmentation_list_spec t1
+															LEFT JOIN tbl_augmentation_list t2 ON t1.augment_list_id = t2. ID
+															LEFT JOIN tbl_municipality t3 ON t2.municipality_id = t3. ID
+															LEFT JOIN tbl_assistance_type t4 ON t1.augment_list_code = t4.assistance_type_sub_gen
+															WHERE
+																t1.date_augmented between '2021-01-01' AND '2021-06-30'
+															AND t4.assistance_type_gen = 'esa'
+															ORDER BY
+																t2.municipality_id ASC,
+																t1.date_augmented ASC
+														) t1
+													GROUP BY
+														t1.municipality_name,
+														t1.municipality_id,
+														t1.date_augmented,
+														t1.number_served,
+														t1.amount
+												) t1
+											GROUP BY
+												t1.municipality_id
+			");
+
+			$data['esa'] = $queryesa->result_array();
+
+			$queryffw = $this->db->query("SELECT
+												t1.municipality_id,
+												SUM (t1.number_served :: NUMERIC) serve,
+												SUM (t1.amount :: NUMERIC) amount
+											FROM
+												(
+													SELECT
+														t1.municipality_id,
+														t1.municipality_name,
+														t1.amount,
+														t1.number_served
+													FROM
+														(
+															SELECT
+																t1.*, t2.number_served,
+																t2.municipality_id,
+																t3.municipality_name,
+																t4.assistance_type_gen,
+																t2.amount
+															FROM
+																tbl_augmentation_list_spec t1
+															LEFT JOIN tbl_augmentation_list t2 ON t1.augment_list_id = t2. ID
+															LEFT JOIN tbl_municipality t3 ON t2.municipality_id = t3. ID
+															LEFT JOIN tbl_assistance_type t4 ON t1.augment_list_code = t4.assistance_type_sub_gen
+															WHERE
+																t1.date_augmented between '2021-01-01' AND '2021-06-30'
+															AND t4.assistance_type_gen = 'aug_ffw'
+															ORDER BY
+																t2.municipality_id ASC,
+																t1.date_augmented ASC
+														) t1
+													GROUP BY
+														t1.municipality_name,
+														t1.municipality_id,
+														t1.date_augmented,
+														t1.number_served,
+														t1.amount
+												) t1
+											GROUP BY
+												t1.municipality_id
+			");
+
+			$data['ffw'] = $queryffw->result_array();
+
+			$queryaug = $this->db->query("SELECT
+												t1.municipality_id,
+												SUM (t1.number_served :: NUMERIC) serve,
+												SUM (t1.amount :: NUMERIC) amount
+											FROM
+												(
+													SELECT
+														t1.municipality_id,
+														t1.municipality_name,
+														t1.amount,
+														t1.number_served
+													FROM
+														(
+															SELECT
+																t1.*, t2.number_served,
+																t2.municipality_id,
+																t3.municipality_name,
+																t4.assistance_type_gen,
+																t2.amount
+															FROM
+																tbl_augmentation_list_spec t1
+															LEFT JOIN tbl_augmentation_list t2 ON t1.augment_list_id = t2. ID
+															LEFT JOIN tbl_municipality t3 ON t2.municipality_id = t3. ID
+															LEFT JOIN tbl_assistance_type t4 ON t1.augment_list_code = t4.assistance_type_sub_gen
+															WHERE
+																t1.date_augmented between '2021-01-01' AND '2021-06-30'
 															AND t4.assistance_type_gen = 'aug'
 															ORDER BY
 																t2.municipality_id ASC,
@@ -5419,7 +5619,7 @@ class disaster_model extends CI_Model{
 																							t2.municipality_id,
 																							SUM (t2.family_cum :: INTEGER) AS fam_cum
 																						FROM
-																							tbl_evac_outside_stats_copy t2
+																							tbl_evac_outside_stats t2
 																						LEFT JOIN tbl_provinces t3 ON t2.provinceid = t3. ID
 																						WHERE
 																							t2.disaster_title_id = $id
@@ -5473,7 +5673,7 @@ class disaster_model extends CI_Model{
 
 			$arr['inside'] = $query->result_array();
 
-			$query2 	= $this->db->query("SELECT sum(t1.family_cum::integer) as fam_cum FROM tbl_evac_outside_stats_copy t1 WHERE t1.disaster_title_id = '$id' AND t1.municipality_id = '$municipality_id'");
+			$query2 	= $this->db->query("SELECT sum(t1.family_cum::integer) as fam_cum FROM tbl_evac_outside_stats t1 WHERE t1.disaster_title_id = '$id' AND t1.municipality_id = '$municipality_id'");
 
 			if($query2->num_rows() < 1){
 
@@ -5548,6 +5748,7 @@ class disaster_model extends CI_Model{
 
 		}
 
+
 		public function deactivateuser($users){
 
 			$data = array();
@@ -5568,8 +5769,252 @@ class disaster_model extends CI_Model{
 
 			return 1;
 
+		}
+
+		public function get_all_disasters(){
+
+			$data = array();
+			$latest_id = "";
+			$separate_data = array();
+			$str = "";
+
+			$query 	= $this->db->query("SELECT
+											t1.ID AS dromic_id, t1.disaster_name, t1.disaster_date, MAX(t2.ID) as latest_id
+										FROM
+											tbl_dromic t1 
+										LEFT JOIN tbl_disaster_title t2 ON t1.ID = t2.dromic_id
+										WHERE
+											date_part( 'YEAR', t1.disaster_date :: DATE ) >= '2018' 
+											GROUP BY t1.id
+										ORDER BY
+											t1.ID ASC, t1.disaster_date::date ASC
+									");
+
+			$data = $query->result_array();
+
+			$str = "<table><tr>";
+			$str = $str."<td>disaster_id</td>";
+			$str = $str."<td>provinceid</td>";
+			$str = $str."<td>municipality_id</td>";
+			$str = $str."<td>family_a_t</td>";
+			$str = $str."<td>person_a_t</td>";
+			$str = $str."<td>family_cum_i</td>";
+			$str = $str."<td>family_now_i</td>";
+			$str = $str."<td>person_cum_i</td>";
+			$str = $str."<td>person_now_i</td>";
+			$str = $str."<td>family_cum_o</td>";
+			$str = $str."<td>family_now_o</td>";
+			$str = $str."<td>person_cum_o</td>";
+			$str = $str."<td>person_now_o</td>";
+			$str = $str."<td>family_cum_s_t</td>";
+			$str = $str."<td>family_now_s_t</td>";
+			$str = $str."<td>person_cum_s_t</td>";
+			$str = $str."<td>person_now_s_t</td>";
+			$str = $str."<td>fam_no</td>";
+			$str = $str."<td>person_no</td>";
+			$str = $str."</tr>";
+
+			for($i = 0 ; $i < count($data) ; $i++){
+
+				$latest_id = $data[$i]['latest_id'];
+
+				$query_data   = $this->db->query("SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														SUM ( family_a_t ) family_a_t,
+														SUM ( person_a_t ) person_a_t,
+														SUM ( family_cum_i ) family_cum_i,
+														SUM ( family_now_i ) family_now_i,
+														SUM ( person_cum_i ) person_cum_i,
+														SUM ( person_now_i ) person_now_i,
+														SUM ( family_cum_o ) family_cum_o,
+														SUM ( family_now_o ) family_now_o,
+														SUM ( person_cum_o ) person_cum_o,
+														SUM ( person_now_o ) person_now_o,
+														SUM ( family_cum_s_t ) family_cum_s_t,
+														SUM ( family_now_s_t ) family_now_s_t,
+														SUM ( person_cum_s_t ) person_cum_s_t,
+														SUM ( person_now_s_t ) person_now_s_t,
+														SUM( fam_no ) fam_no,
+														SUM (person_no) person_no
+													FROM
+														(
+													SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														COALESCE ( t1.family_cum_i, '0' ) + COALESCE ( t1.family_cum_o, '0' ) family_a_t,
+														COALESCE ( t1.person_cum_i, '0' ) + COALESCE ( t1.person_cum_o, '0' ) person_a_t,
+														t1.family_cum_i,
+														t1.family_now_i,
+														t1.person_cum_i,
+														t1.person_now_i,
+														t1.family_cum_o,
+														t1.family_now_o,
+														t1.person_cum_o,
+														t1.person_now_o,
+														COALESCE ( t1.family_cum_i, '0' ) + COALESCE ( t1.family_cum_o, '0' ) family_cum_s_t,
+														COALESCE ( t1.family_now_i, '0' ) + COALESCE ( t1.family_now_o, '0' ) family_now_s_t,
+														COALESCE ( t1.person_cum_i, '0' ) + COALESCE ( t1.person_cum_o, '0' ) person_cum_s_t,
+														COALESCE ( t1.person_now_i, '0' ) + COALESCE ( t1.person_now_o, '0' ) person_now_s_t,
+														t1.fam_no,
+														t1.person_no
+													FROM
+														(
+													SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														t1.family_cum_i,
+														t1.family_now_i,
+														t1.person_cum_i,
+														t1.person_now_i,
+														t1.family_cum_o,
+														t1.family_now_o,
+														t1.person_cum_o,
+														t1.person_now_o,
+														t1.fam_no,
+														t1.person_no
+													FROM
+														(
+													SELECT
+														t0.* 
+													FROM
+														(
+													SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														t1.family_cum :: INTEGER family_cum_i,
+														t1.family_now :: INTEGER family_now_i,
+														t1.person_cum :: INTEGER person_cum_i,
+														t1.person_now :: INTEGER person_now_i,
+														'0' :: INTEGER family_cum_o,
+														'0' :: INTEGER family_now_o,
+														'0' :: INTEGER person_cum_o,
+														'0' :: INTEGER person_now_o,
+														'0' :: INTEGER fam_no,
+														'0' :: INTEGER person_no
+													FROM
+														PUBLIC.tbl_evacuation_stats t1
+														LEFT JOIN PUBLIC.tbl_disaster_title t2 ON t1.disaster_title_id = t2.ID 
+													WHERE
+														t1.disaster_title_id = '$latest_id' 
+													ORDER BY
+														t1.municipality_id 
+														) t0 UNION ALL
+														(
+													SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														'0' :: INTEGER family_cum_i,
+														'0' :: INTEGER family_now_i,
+														'0' :: INTEGER person_cum_i,
+														'0' :: INTEGER person_now_i,
+														t1.family_cum :: INTEGER family_cum_o,
+														t1.family_now :: INTEGER family_now_o,
+														t1.person_cum :: INTEGER person_cum_o,
+														t1.person_now :: INTEGER person_now_o,
+														'0' :: INTEGER fam_no,
+														'0' :: INTEGER person_no
+													FROM
+														PUBLIC.tbl_evac_outside_stats t1
+														LEFT JOIN PUBLIC.tbl_disaster_title t2 ON t1.disaster_title_id = t2.ID 
+													WHERE
+														t1.disaster_title_id = '$latest_id' 
+													ORDER BY
+														t1.municipality_id 
+														) UNION ALL
+														(
+													SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														'0' :: INTEGER family_cum_i,
+														'0' :: INTEGER family_now_i,
+														'0' :: INTEGER person_cum_i,
+														'0' :: INTEGER person_now_i,
+														'0' :: INTEGER family_cum_o,
+														'0' :: INTEGER family_now_o,
+														'0' :: INTEGER person_cum_o,
+														'0' :: INTEGER person_now_o,
+														'0' :: INTEGER fam_no,
+														'0' :: INTEGER person_no	
+													FROM
+														PUBLIC.tbl_casualty_asst t1
+														LEFT JOIN PUBLIC.tbl_disaster_title t2 ON t1.disaster_title_id = t2.ID 
+													WHERE
+														t1.disaster_title_id = '$latest_id' 
+													ORDER BY
+														t1.municipality_id 
+														) UNION ALL
+														(
+													SELECT
+														t1.provinceid,
+														t1.municipality_id,
+														'0' :: INTEGER family_cum_i,
+														'0' :: INTEGER family_now_i,
+														'0' :: INTEGER person_cum_i,
+														'0' :: INTEGER person_now_i,
+														'0' :: INTEGER family_cum_o,
+														'0' :: INTEGER family_now_o,
+														'0' :: INTEGER person_cum_o,
+														'0' :: INTEGER person_now_o, 
+														t1.fam_no :: INTEGER fam_no,
+														t1.person_no :: INTEGER person_no
+													FROM
+														PUBLIC.tbl_affected t1
+														LEFT JOIN PUBLIC.tbl_disaster_title t2 ON t1.disaster_title_id :: INTEGER = t2.ID 
+													WHERE
+														t1.disaster_title_id :: INTEGER = '$latest_id' 
+													ORDER BY
+														t1.municipality_id 
+														) 
+														) t1 
+														) t1 
+													ORDER BY
+														t1.municipality_id 
+														) t1 
+													GROUP BY
+														t1.provinceid,
+														t1.municipality_id 
+													ORDER BY
+														t1.municipality_id
+									");
+
+				$separate_data = $query_data->result_array();
+
+				for($j = 0 ; $j < count($separate_data) ; $j++){
+					$str = $str."<tr>";
+					$str = $str."<td>".$data[$i]['dromic_id']."</td>";
+					$str = $str."<td>".$separate_data[$j]['provinceid']."</td>";
+					$str = $str."<td>".$separate_data[$j]['municipality_id']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_a_t']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_a_t']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_cum_i']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_now_i']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_cum_i']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_now_i']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_cum_o']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_now_o']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_cum_o']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_now_o']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_cum_s_t']."</td>";
+					$str = $str."<td>".$separate_data[$j]['family_now_s_t']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_cum_s_t']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_now_s_t']."</td>";
+					$str = $str."<td>".$separate_data[$j]['fam_no']."</td>";
+					$str = $str."<td>".$separate_data[$j]['person_no']."</td>";
+					$str = $str."</tr>";
+				}
+
+				echo $str;
+
+				$str = "";
+
+			}
+
+			$str = $str."</table>";
 
 		}
+
+		
 
 		public function authenticate_user($username,$password){
 

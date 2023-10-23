@@ -3658,11 +3658,13 @@ function get_dromic(n){
 					}
 					$('#lgu_list_assistance tbody').append(
 						"<tr>"+
-							"<th style='background-color:#169F85; color:#fff' colspan='4'>"+provinces[i].name+"</th>"+
+							"<th style='background-color:#169F85; color:#fff' colspan='5'>"+provinces[i].name+"</th>"+
 							"<th style='background-color:#169F85; color:#fff; text-align:right'>"+addCommaMoney(total)+"</th>"+
 							"<th style='background-color:#169F85; color:#fff'></th>"+
 						"</tr>"
 					)
+
+					console.log(a);
 
 					for(var j in a){
 
@@ -3674,11 +3676,12 @@ function get_dromic(n){
 								if(j == 0){
 									$('#lgu_list_assistance tbody').append(
 										"<tr style='cursor:pointer' ondblclick='updateAssistanceList("+a[j].id+")'>"+
-											"<th style='color:#000'>       "+a[j].municipality_name+"</th>"+
-											"<th style='color:#000'>       "+isnull(a[j].fnfi_name)+"</th>"+
-											"<th style='text-align:right; color:#000'>       "+isnull(a[j].quantity)+"</th>"+
-											"<th style='color:#000'>       "+isnull(todate(a[j].date_augmented))+"</th>"+
-											"<th style='text-align:right; color:#000'>       "+addCommaMoney(amt) +"</th>"+
+											"<th style='color:#000'>"+a[j].municipality_name+"</th>"+
+											"<th style='color:#000'>"+isnull(a[j].fnfi_name)+"</th>"+
+											"<th style='text-align:right; color:#000'>"+isnull(a[j].quantity)+"</th>"+
+											"<th style='text-align:right; color:#000'>"+isnull(a[j].cost)+"</th>"+
+											"<th style='text-align:right; color:#000'>"+isnull(todate(a[j].date_augmented))+"</th>"+
+											"<th style='text-align:right; color:#000'>"+addCommaMoney(amt) +"</th>"+
 											"<th style='text-align:center; color:#000'><button type='button' class='btn btn-danger btn-xs can_editasst' onclick='updateAssistanceList("+a[j].id+")'><i class='fa fa-exclamation-circle'></i></button></th>"+
 										"</tr>"
 									)
@@ -3687,9 +3690,10 @@ function get_dromic(n){
 										$('#lgu_list_assistance tbody').append(
 											"<tr style='cursor:pointer' ondblclick='updateAssistanceList("+a[j].id+")'>"+
 												"<th></th>"+
-												"<th style='color:#000'>       "+isnull(a[j].fnfi_name)+"</th>"+
-												"<th style='text-align:right; color:#000'>       "+isnull(a[j].quantity)+"</th>"+
-												"<th style='color:#000'>       "+isnull(todate(a[j].date_augmented))+"</th>"+
+												"<th style='color:#000'>"+isnull(a[j].fnfi_name)+"</th>"+
+												"<th style='text-align:right; color:#000'>"+isnull(a[j].quantity)+"</th>"+
+												"<th style='text-align:right; color:#000'>"+isnull(a[j].cost)+"</th>"+
+												"<th style='text-align:right; color:#000'>"+isnull(todate(a[j].date_augmented))+"</th>"+
 												"<th style='text-align:right; color:#000'>       "+addCommaMoney(amt)  +"</th>"+
 												"<th style='text-align:center; color:#000'><button type='button' class='btn btn-danger btn-xs can_editasst' onclick='updateAssistanceList("+a[j].id+")'><i class='fa fa-exclamation-circle'></i></button></th>"+
 											"</tr>"
@@ -3697,11 +3701,12 @@ function get_dromic(n){
 									}else{
 										$('#lgu_list_assistance tbody').append(
 											"<tr style='cursor:pointer' ondblclick='updateAssistanceList("+a[j].id+")'>"+
-												"<th style='color:#000'>       "+a[j].municipality_name+"</th>"+
-												"<th style='color:#000'>       "+isnull(a[j].fnfi_name)+"</th>"+
-												"<th style='text-align:right; color:#000'>       "+isnull(a[j].quantity)+"</th>"+
-												"<th style='color:#000'>       "+isnull(todate(a[j].date_augmented))+"</th>"+
-												"<th style='text-align:right; color:#000'>       "+addCommaMoney(amt) +"</th>"+
+												"<th style='color:#000'>"+a[j].municipality_name+"</th>"+
+												"<th style='color:#000'>"+isnull(a[j].fnfi_name)+"</th>"+
+												"<th style='text-align:right; color:#000'>"+isnull(a[j].quantity)+"</th>"+
+												"<th style='text-align:right; color:#000'>"+isnull(a[j].cost)+"</th>"+
+												"<th style='text-align:right; color:#000'>"+isnull(todate(a[j].date_augmented))+"</th>"+
+												"<th style='text-align:right; color:#000'>"+addCommaMoney(amt) +"</th>"+
 												"<th style='text-align:center; color:#000'><button type='button' class='btn btn-danger btn-xs can_editasst' onclick='updateAssistanceList("+a[j].id+")'><i class='fa fa-exclamation-circle'></i></button></th>"+
 											"</tr>"
 										)
@@ -3965,7 +3970,7 @@ function updateOutsideEvacuation(id){
 			$('#addfamOECbrgy').val(a.rs[0].brgy_host);
 
 			$('#addfamOECbrgyO').empty().append(
-				"<option value=''>-- Select Barangay --</option>"
+				"<option value=''>-- Select Barafngay --</option>"
 			);
 
 			if(Number(a.rs[0].municipality_origin) > 73){
@@ -4622,10 +4627,10 @@ function addFamIEC(){
 
 	}else{
 
-		if($('#ecfamcum').val() < $('#ecfamnow').val()){
+		if(Number($('#ecfamcum').val()) < Number($('#ecfamnow').val())){
 			msgbox("Family NOW must not be greater than Family CUM");
 		}else{
-			if($('#ecpercum').val() < $('#ecpernow').val()){
+			if(Number($('#ecpercum').val()) < Number($('#ecpernow').val())){
 				msgbox("Person NOW must not be greater than Person CUM");
 			}else{
 
@@ -4731,10 +4736,10 @@ function addFamIECS(){
 
 	}else{
 
-		if($('#ecfamcum').val() < $('#ecfamnow').val()){
+		if(Number($('#ecfamcum').val()) < Number($('#ecfamnow').val())){
 			msgbox("Family NOW must not be greater than Family CUM");
 		}else{
-			if($('#ecpercum').val() < $('#ecpernow').val()){
+			if(Number($('#ecpercum').val()) < Number($('#ecpernow').val())){
 				msgbox("Person NOW must not be greater than Person CUM");
 			}else{
 
@@ -4865,10 +4870,10 @@ function addFamAECS(){
 
 	}else{
 
-		if($('#ecfamcum').val() < $('#ecfamnow').val()){
+		if(Number($('#ecfamcum').val()) < Number($('#ecfamnow').val())){
 			msgbox("Family NOW must not be greater than Family CUM");
 		}else{
-			if($('#ecpercum').val() < $('#ecpernow').val()){
+			if(Number($('#ecpercum').val()) < Number($('#ecpernow').val())){
 				msgbox("Person NOW must not be greater than Person CUM");
 			}else{
 
@@ -5005,10 +5010,10 @@ function addFamCECS(){
 
 	}else{
 
-		if($('#ecfamcum').val() < $('#ecfamnow').val()){
+		if(Number($('#ecfamcum').val()) < Number($('#ecfamnow').val())){
 			msgbox("Family NOW must not be greater than Family CUM");
 		}else{
-			if($('#ecpercum').val() < $('#ecpernow').val()){
+			if(Number($('#ecpercum').val()) < Number($('#ecpernow').val())){
 				msgbox("Person NOW must not be greater than Person CUM");
 			}else{
 
@@ -9714,9 +9719,6 @@ function get_reliefassistance_report(yearss){
 							tnamount += Number(a.asst[kk].quantity) * Number(a.asst[kk].cost);
 
 						}
-
-						
-
 					}
 
 					allserve += tnserve;
@@ -9770,7 +9772,8 @@ function get_reliefassistance_report(yearss){
 								if((a.asst[zz].augment_list_code == aug_types[q].code)){
 									amamount += Number(a.asst[zz].quantity) * Number(a.asst[zz].cost);
 								}
-							}	
+
+							}
 
 						}
 					
@@ -9786,8 +9789,6 @@ function get_reliefassistance_report(yearss){
 						);
 
 						amamount = 0;
-
-						
 
 						for(var m in a.muni){
 
@@ -10195,6 +10196,14 @@ $('#exporttoexcelcongy').click(function(){
 	var cyimplementy = $('#cyimplementy').text();
 
 	toExcelTableCong("tbl_congressional_year","Yearly Congressional Report "+cyimplementy);
+
+})
+
+$('#exporttoexcelcongs').click(function(){
+
+	//var cyimplementy = $('#cyimplementy').text();
+
+	toExcelTableCong("tbl_congressional_sem","Semestral Congressional Report "+'1st Semester');
 
 })
 
@@ -10706,6 +10715,217 @@ if(tbl_congressional_year.length){
 	var year = new Date();
 	y = $.datepicker.formatDate('yy', new Date(year));
 	yearly_congressional(y);
+
+}
+
+sem_congressional();
+
+function sem_congressional(){
+
+	var serve 	= "";
+	var amount 	= "";
+
+	// var datas = {
+	// 	sem 	: year
+	// }
+
+	$('#tbl_congressional_sem tbody').empty();
+
+	$.getJSON(serverip+"get_congressional_sem",function(response){
+
+		$('#congreloader').hide();
+
+		for(var i in response.city){
+			if(response.city[i].district != "Z"){
+				for(var k in response.cfw2){
+					if(response.cfw2[k].municipality_id == response.city[i].municipality_id){
+						serve	= response.cfw2[k].serve;
+						amount	= response.cfw2[k].amount;
+					}
+				}
+				if(i == 0){
+					$('#tbl_congressional_sem tbody').append(
+						"<tr>"+
+							"<td style='padding:3px; border: 1px solid #000; width:300px'>Disaster (Cash-for-Work Assistance)</td>"+
+							"<td style='padding:3px; border: 1px solid #000; width: 100px; text-align:justify' rowspan='73'>Cash for Work  is short term intervention aims for temporarry provision of employment to distress/displaced individualsby participating on preparedness,mitigation,relief,rehabilitaion or risk reduction activities , in exchange for service render profgram receipient will be provided cash assistance.</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"</tr>"
+					)
+				}else{
+					$('#tbl_congressional_sem tbody').append(
+						"<tr>"+
+							"<td style='padding:3px; border: 1px solid #000'>Disaster (Cash-for-Work Assistance)</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"</tr>"
+					)
+				}
+
+				serve 	= "";
+				amount 	= "";
+			}
+		}
+
+		for(var i in response.city){
+			if(response.city[i].district != "Z"){
+				for(var k in response.esa){
+					if(response.esa[k].municipality_id == response.city[i].municipality_id){
+						serve 	= response.esa[k].serve;
+						amount	= response.esa[k].amount;
+					}
+				}
+				if(i == 0){
+					$('#tbl_congressional_sem tbody').append(
+						"<tr>"+
+							"<td style='padding:3px; border: 1px solid #000; width:300px'>Disaster (Emergency Shelter Assistance)</td>"+
+							"<td style='padding:3px; border: 1px solid #000; width: 100px; text-align:justify' rowspan='73'>Is provision of of emergency 'self build' shelter assistance thru limited material/financial assistance of affected families.</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"</tr>"
+					)
+				}else{
+					$('#tbl_congressional_sem tbody').append(
+						"<tr>"+
+							"<td style='padding:3px; border: 1px solid #000'>Disaster (Emergency Shelter Assistance)</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"</tr>"
+					)
+				}
+
+				serve 	= "";
+				amount 	= "";
+			}
+		}
+
+		for(var i in response.city){
+			if(response.city[i].district != "Z"){
+				for(var k in response.ffw){
+					if(response.ffw[k].municipality_id == response.city[i].municipality_id){
+						serve 	= response.ffw[k].serve;
+						amount	= response.ffw[k].amount;
+					}
+				}
+				if(i == 0){
+					$('#tbl_congressional_sem tbody').append(
+						"<tr>"+
+							"<td style='padding:3px; border: 1px solid #000; width:300px'>Disaster (Food for Work)</td>"+
+							"<td style='padding:3px; border: 1px solid #000; width: 100px; text-align:justify' rowspan='73'>Provision of food to disaster survivors in exchange to their effort in rendering a community volunteer work in restoring/rebuilding their damaged houses</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"</tr>"
+					)
+				}else{
+					$('#tbl_congressional_sem tbody').append(
+						"<tr>"+
+							"<td style='padding:3px; border: 1px solid #000'>Disaster (Food for Work)</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+							"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"</tr>"
+					)
+				}
+
+				serve 	= "";
+				amount 	= "";
+			}
+		}
+
+		for(var i in response.city){
+			for(var k in response.aug){
+				if(response.aug[k].municipality_id == response.city[i].municipality_id){
+					serve 	= response.aug[k].serve;
+					amount	= response.aug[k].amount;
+				}
+			}
+			if(i == 0){
+				$('#tbl_congressional_sem tbody').append(
+					"<tr>"+
+						"<td style='padding:3px; border: 1px solid #000; width:300px'>Disaster Relief Augmentation</td>"+
+						"<td style='padding:3px; border: 1px solid #000; width: 100px; text-align:justify' rowspan='90'>Provision of food to disaster survivors in exchange to their effort in rendering a community volunteer work in restoring/rebuilding their damaged houses</td>"+
+						"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+					"</tr>"
+				)
+			}else{
+				$('#tbl_congressional_sem tbody').append(
+					"<tr>"+
+						"<td style='padding:3px; border: 1px solid #000'>Disaster Relief Augmentation</td>"+
+						"<td style='padding:3px; border: 1px solid #000'>"+response.city[i].province_name+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:center'>"+response.city[i].district+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:left'>"+response.city[i].municipality_name+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000'>Families</td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(serve.toLocaleString())+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000; text-align:right'>"+isnull(amount.toLocaleString())+"</td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+						"<td style='padding:3px; border: 1px solid #000'></td>"+
+					"</tr>"
+				)
+			}
+
+			serve 	= "";
+			amount 	= "";
+		}
+
+	});
 
 }
 
